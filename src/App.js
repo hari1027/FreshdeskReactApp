@@ -84,7 +84,7 @@ export default function App() {
 
     contact: {
       search: async (contactNumber) => {
-        let query = ("\\\"" + ("phone:'" + encodeURIComponent(contactNumber) + "'") + "\\\"");
+        let query = ("\\\"" + ("phone:'" + encodeURIComponent(contactNumber) +  "'") + "\\\"");
 
         let contacts = await fdApp.invoke("searchContact", { context: { query: query } });
         if (contacts.total < 1) {
@@ -116,7 +116,7 @@ export default function App() {
 
   function onClickSaveButton(num) {
     setNumber(num)
-    if (!isNaN(num) && num !== '' && num !== null && num.length === 10 && (num.charAt(0) === "6" || num.charAt(0) === "7" || num.charAt(0) === "8" || num.charAt(0) === "9")) {
+    if (num !== '' && num !== null) {
       setNotValid(false);
       fdApp.contact.search(num)
     }
@@ -198,8 +198,7 @@ export default function App() {
       <div className='main'>
         <label className="PhoneNumberText">Enter a PhoneNumber to Search Tickets</label>
         <input className="phoneNumberField" type="text" value={number ? number : (numberAfterRefresh ? numberAfterRefresh : (numberAfterTicketBack ? numberAfterTicketBack : ''))} onChange={(e) => { setNumber(e.target.value) }}></input>
-        {notvalid && <label className="validationText">PhoneNumber should be 10 numbers starting with 6,7,8 or
-          9</label>}
+        {notvalid && <label className="validationText">PhoneNumber cannot be Empty</label>}
         <label className="noContactOrTicketText">{contactText}</label>
         <button className="button" onClick={() => { onClickSaveButton(number) }}>Search</button>
 
