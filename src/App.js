@@ -146,13 +146,20 @@ export default function App() {
 
     let timeafterOverDue = "-"
     let timebeforefeDue = "-"
-    if (frDueBy < new Date().toISOString) {
-      timebeforefeDue = new Date(frDueBy) - new Date() 
-      timebeforefeDue = toDisplayTimeContent(timebeforefeDue)
-    }
-    else if (dueBy > new Date().toISOString) {
-      timeafterOverDue = new Date(dueBy) - new Date() 
+     if (dueBy > new Date().toISOString) {
+      timeafterOverDue = new Date() - new Date(dueBy) 
       timeafterOverDue = toDisplayTimeContent(timeafterOverDue)
+    }
+    else if (frDueBy < new Date().toISOString) {
+      timebeforefeDue = new Date(frDueBy) - new Date() 
+      if(timebeforefeDue < 0){
+        timebeforefeDue = '-'
+        timeafterOverDue = new Date() - new Date(frDueBy) 
+        timeafterOverDue = toDisplayTimeContent(timeafterOverDue)
+      }
+      if(timebeforefeDue > 0){
+      timebeforefeDue = toDisplayTimeContent(timebeforefeDue)
+      }
     }
 
     if (timebeforefeDue !== "-") {
